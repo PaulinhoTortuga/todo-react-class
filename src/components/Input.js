@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-export class AddTodo extends Component {
+export class Input extends Component {
 	state = {
 		title: ''
 	};
@@ -9,21 +8,19 @@ export class AddTodo extends Component {
 	onChange = (e) => {
 		this.setState({ title: e.target.value });
 	};
-
 	onKeyUp = (e) => {
 		if (e.key === 'Enter') {
 			this.props.addTodo(this.state.title);
 			this.setState({ title: '' });
 		}
 	};
-
 	render() {
 		return (
 			<input
 				style={{ width: '100%', padding: '5px' }}
 				type="text"
-				name="title"
-				placeholder="Add Todo..."
+				name={this.props.name}
+				placeholder={this.props.placeholder}
 				value={this.state.title}
 				onChange={this.onChange}
 				onKeyUp={this.onKeyUp}
@@ -32,7 +29,4 @@ export class AddTodo extends Component {
 	}
 }
 
-AddTodo.propTypes = {
-	addTodo: PropTypes.func.isRequired
-};
-export default AddTodo;
+export default Input;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import TodoItem from './TodoItem';
 
-class Todos extends Component {
+class TodoList extends Component {
 	render() {
 		return this.props.todos.map((todo) => (
 			<TodoItem
@@ -15,9 +14,4 @@ class Todos extends Component {
 	}
 }
 
-Todos.propTypes = {
-	todoCheck: PropTypes.func.isRequired,
-	delTodo: PropTypes.func.isRequired,
-	todos: PropTypes.array.isRequired
-};
-export default Todos;
+export default TodoList;
