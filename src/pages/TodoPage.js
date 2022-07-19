@@ -1,66 +1,67 @@
-import React, { Component } from 'react';
+import { v4 } from 'uuid';
+import { useState } from 'react';
 import Header from '../components/Header';
 import TodoList from '../features/TodoList';
-import { v4 } from 'uuid';
 import AddTodo from '../features/AddTodo';
 
-class TodoPage extends Component {
-	state = {
-		todos: [
-			{
-				id: v4(),
-				title: 'Feed the cat',
-				checked: false
-			},
-			{
-				id: v4(),
-				title: 'Work on job tasks',
-				checked: false
-			},
-			{
-				id: v4(),
-				title: 'Go on training',
-				checked: false
-			}
-		],
-		input: ''
-	};
-	todoCheck = (id) => {
-		this.setState({
-			todos: this.state.todos.map((todo) => {
+const TodoPage = () => {
+	let todoList = [
+		{
+			id: v4(),
+			title: 'Feed the cat',
+			checked: false
+		},
+		{
+			id: v4(),
+			title: 'Work on job tasks',
+			checked: false
+		},
+		{
+			id: v4(),
+			title: 'Go on training',
+			checked: false
+		}
+	];
+
+	const [todoListState, setTodoListState] = useState(todoList);
+
+	const todoCheck = (id) => {
+		setTodoListState(() => {
+			return todoListState.map((todo) => {
 				if (todo.id === id) {
 					return { ...todo, checked: !todo.checked };
 				} else {
 					return todo;
 				}
-			})
+			});
 		});
-		console.log(this.state);
 	};
 
-	delTodo = (id) => {
-		this.setState({ todos: this.state.todos.filter((todo) => todo.id !== id) });
+	const delTodo = (id) => {
+		setTodoListState(() => {
+			return todoListState.filter((todo) => todo.id !== id);
+		});
 	};
 
-	addTodo = (title) => {
+	const addTodo = (title) => {
 		const newTodo = {
 			id: v4(),
 			title,
 			checked: false
 		};
-		this.setState({ todos: [...this.state.todos, newTodo] });
+		setTodoListState(() => {
+			return [...todoListState, newTodo];
+		});
 	};
-
-	render() {
-		return (
-			<div className="App">
-				<div className="container">
-					<Header title={'TodoApp'} />
-					<AddTodo addTodo={this.addTodo} />
-					<TodoList todos={this.state.todos} todoCheck={this.todoCheck} delTodo={this.delTodo} />
-				</div>
+	return (
+		<div className="App">
+			<div className="container">
+				<Header title={'TodoApp'} />
+				<AddTodo addTodo={addTodo} />
+				<TodoList todos={todoListState} todoCheck={todoCheck} delTodo={delTodo} />
 			</div>
-		);
-	}
-}
+		</div>
+	);
+};
+
 export default TodoPage;

@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export class Input extends Component {
-	render() {
-		return (
-			<input
-				style={{ width: '100%', padding: '5px' }}
-				type="text"
-				name={this.props.name}
-				placeholder={this.props.placeholder}
-				value={this.props.value}
-				onChange={this.props.onChange}
-				onKeyUp={this.props.onKeyUp}
-			/>
-		);
-	}
-}
+const Input = (props) => {
+	return (
+		<input
+			style={{ width: '100%', padding: '5px' }}
+			type="text"
+			name={props.name}
+			placeholder={props.placeholder}
+			value={props.value}
+			onChange={props.onChange}
+			onKeyUp={props.onKeyUp}
+		/>
+	);
+};
 
 export default Input;
