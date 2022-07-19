@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 import TodoList from '../features/TodoList';
-import Input from '../components/Input';
 import { v4 } from 'uuid';
+import AddTodo from '../features/AddTodo';
 
 class TodoPage extends Component {
 	state = {
@@ -22,9 +22,9 @@ class TodoPage extends Component {
 				title: 'Go on training',
 				checked: false
 			}
-		]
+		],
+		input: ''
 	};
-
 	todoCheck = (id) => {
 		this.setState({
 			todos: this.state.todos.map((todo) => {
@@ -39,7 +39,7 @@ class TodoPage extends Component {
 	};
 
 	delTodo = (id) => {
-		this.setState({ todos: [...this.state.todos.filter((todo) => todo.id !== id)] });
+		this.setState({ todos: this.state.todos.filter((todo) => todo.id !== id) });
 	};
 
 	addTodo = (title) => {
@@ -56,7 +56,7 @@ class TodoPage extends Component {
 			<div className="App">
 				<div className="container">
 					<Header title={'TodoApp'} />
-					<Input addTodo={this.addTodo} />
+					<AddTodo addTodo={this.addTodo} />
 					<TodoList todos={this.state.todos} todoCheck={this.todoCheck} delTodo={this.delTodo} />
 				</div>
 			</div>
