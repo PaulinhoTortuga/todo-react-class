@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Input from '../components/Input';
+import InputField from '../components/InputField';
 
-const AddTodo = (props) => {
+const AddTodo = ({ addTodo }) => {
 	const [inputValue, setInputValue] = useState('');
 
 	const onInputChange = (event) => {
@@ -10,10 +10,10 @@ const AddTodo = (props) => {
 
 	const onInputKeyUp = (event) => {
 		if (event.key === 'Enter') {
-			props.addTodo(inputValue);
+			addTodo(inputValue);
 			setInputValue('');
 		}
 	};
-	return <Input value={inputValue} onChange={onInputChange} onKeyUp={onInputKeyUp} />;
+	return <InputField value={inputValue} onChange={onInputChange} onKeyUp={onInputKeyUp} />;
 };
 export default AddTodo;

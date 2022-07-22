@@ -1,39 +1,54 @@
-const getStyle = () => {
-	return {
-		display: 'flex',
-		justifyContent: 'flex-start',
-		alignItems: 'center',
-		backgroundColor: '#f4f4f4',
-		padding: '10px',
-		borderBottom: '1px #ccc dotted'
+import styled from 'styled-components';
+import { Checkbox, Input, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useState } from 'react';
+
+// const textStyle = (checked) => {
+// 	return {
+// 		textDecoration: checked ? 'line-through' : 'none',
+// 		marginLeft: '20px'
+// 	};
+// };
+
+const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
+	const { readOnly, setReadOnly } = useState(true);
+
+	const updateTodo = (event) => {
+		const input = event.target;
+		input.focus();
+		setReadOnly(() => false);
+		input.onblur = () => {
+			onUpdateTodo(todo.id, input.value);
+			setReadOnly(() => true);
+		};
 	};
-};
-const textStyle = (checked) => {
-	return {
-		textDecoration: checked ? 'line-through' : 'none',
-		marginLeft: '20px'
-	};
-};
-const TodoItem = (props) => {
-	const { id, title } = props.todo;
 	return (
-		<div style={getStyle()}>
-			<input type="checkbox" onChange={() => props.todoCheck(id)} />
-			<p style={textStyle(props.todo.checked)}>{title}</p>
-			<button onClick={() => props.delTodo(id)} style={btnStyle}>
-				X
-			</button>
-		</div>
+		<Item>
+			<Checkbox onChange={() => onCheckTodo(todo.id)} />
+			<Input
+				value={todo.title}
+				variant="standard"
+				readOnly={readOnly}
+				disableUnderline={true}
+				onDoubleClick={updateTodo}
+			/>
+			{/* <p style={textStyle(todo.checked)}>{todo.title}</p> */}
+			<IconButton
+				aria-label="delete"
+				sx={{ marginLeft: 'auto' }}
+				onClick={() => onDelTodo(todo.id)}>
+				<DeleteIcon />
+			</IconButton>
+		</Item>
 	);
 };
-
-const btnStyle = {
-	backgroundColor: '#CA2603',
-	color: '#fff',
-	border: 'none',
-	padding: '5px 10px',
-	borderRadius: '50%',
-	cursor: 'pointer',
-	marginLeft: 'auto'
-};
 export default TodoItem;
+
+const Item = styled.div`
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: #f4f4f4;
+	padding: 10px;
+	border-bottom: 1px #ccc dotted;
+`;
