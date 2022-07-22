@@ -11,25 +11,29 @@ import { useState } from 'react';
 // };
 
 const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
-	const { readOnly, setReadOnly } = useState(true);
+	const [readOnly, setReadOnly] = useState(true);
 
 	const updateTodo = (event) => {
 		const input = event.target;
 		input.focus();
+		console.log(input);
 		setReadOnly(() => false);
 		input.onblur = () => {
 			onUpdateTodo(todo.id, input.value);
 			setReadOnly(() => true);
+			if (!input.value) {
+				onDelTodo(todo.id);
+			}
 		};
 	};
 	return (
 		<Item>
-			<Checkbox onChange={() => onCheckTodo(todo.id)} />
+			<Checkbox checked={todo.checked} onChange={() => onCheckTodo(todo.id)} />
 			<Input
-				value={todo.title}
+				defaultValue={todo.title}
 				variant="standard"
 				readOnly={readOnly}
-				disableUnderline={true}
+				disableUnderline={readOnly}
 				onDoubleClick={updateTodo}
 			/>
 			{/* <p style={textStyle(todo.checked)}>{todo.title}</p> */}

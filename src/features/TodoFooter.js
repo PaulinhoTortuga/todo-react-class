@@ -1,17 +1,29 @@
 import styled from 'styled-components';
 import { Button, ButtonGroup } from '@mui/material';
 
-export default function TodoFooter({ todoListLength }) {
+export default function TodoFooter({
+	todoListLength,
+	filterStatusHandler,
+	toggleAllHandler,
+	clearCheckedHandler
+}) {
+	const filterHandler = (event) => {
+		filterStatusHandler(event.target.id);
+	};
 	return (
 		<Footer>
 			<Span>{todoListLength} items left</Span>
-			<ButtonGroup variant="contained">
-				<Button>All</Button>
-				<Button>Active</Button>
-				<Button>Completed</Button>
+			<ButtonGroup variant="contained" onClick={filterHandler}>
+				<Button id="all">All</Button>
+				<Button id="active">Active</Button>
+				<Button id="completed">Completed</Button>
 			</ButtonGroup>
-			<Button variant="contained">Finish all</Button>
-			<Button variant="contained">Clear completed</Button>
+			<Button variant="contained" onClick={toggleAllHandler}>
+				Finish all
+			</Button>
+			<Button variant="contained" onClick={clearCheckedHandler}>
+				Clear completed
+			</Button>
 		</Footer>
 	);
 }

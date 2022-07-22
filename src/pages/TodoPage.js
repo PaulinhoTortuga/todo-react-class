@@ -26,6 +26,7 @@ const TodoPage = () => {
 	];
 
 	const [todoListState, setTodoListState] = useState(todoList);
+	const [filterStatus, setFilterStatus] = useState('all');
 
 	const todoCheck = (id) => {
 		setTodoListState(() => {
@@ -47,7 +48,7 @@ const TodoPage = () => {
 
 	const updateTodo = (id, newTodo) => {
 		setTodoListState(() => {
-			return todoListState.map((todo) => (todo.id === id ? { ...todo, title: newTodo } : todo));
+			return todoListState.map((item) => (item.id === id ? { ...item, title: newTodo } : item));
 		});
 	};
 
@@ -62,6 +63,29 @@ const TodoPage = () => {
 		});
 	};
 
+	const toggleAll = () => {
+		setTodoListState(() => {
+			let uncheckedTodos = todoListState.filter((item) => item.checked === false);
+			if (uncheckedTodos.length !== 0) {
+				return todoListState.map((item) => {
+					item.checked = true;
+					return item;
+				});
+			} else {
+				return todoListState.map((item) => {
+					item.checked = false;
+					return item;
+				});
+			}
+		});
+	};
+
+	const clearChecked = () => {
+		setTodoListState(() => {
+			return todoListState.filter((item) => !item.checked);
+		});
+	};
+
 	return (
 		<div className="App">
 			<div className="container">
@@ -72,8 +96,16 @@ const TodoPage = () => {
 					checkTodoHandler={todoCheck}
 					delTodoHandler={delTodo}
 					updateTodoHandler={updateTodo}
+					filterStatus={filterStatus}
 				/>
-				{todoListState.length != 0 && <TodoFooter todoListLength={todoListState.length} />}
+				{todoListState.length != 0 && (
+					<TodoFooter
+						todoListLength={todoListState.length}
+						filterStatusHandler={setFilterStatus}
+						toggleAllHandler={toggleAll}
+						clearCheckedHandler={clearChecked}
+					/>
+				)}
 			</div>
 		</div>
 	);
