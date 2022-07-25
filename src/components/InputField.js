@@ -4,6 +4,9 @@ import { styled } from '@mui/system';
 import TextField from '@mui/material/TextField';
 
 const InputField = ({ name, label, placeholder, value, onChange, onKeyUp }) => {
+	const handleChange = (event) => {
+		onChange(event.target.value);
+	};
 	return (
 		<Container>
 			<TextFieldWrapper
@@ -13,7 +16,7 @@ const InputField = ({ name, label, placeholder, value, onChange, onKeyUp }) => {
 				label={label}
 				placeholder={placeholder}
 				value={value}
-				onChange={onChange}
+				onChange={handleChange}
 				onKeyUp={onKeyUp}
 			/>
 		</Container>

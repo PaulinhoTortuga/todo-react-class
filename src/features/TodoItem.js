@@ -4,8 +4,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useState, useRef } from 'react';
 
 const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
-	const [readOnly, setReadOnly] = useState(true);
 	const inputRef = useRef();
+	const [readOnly, setReadOnly] = useState(true);
+	const [inputValue, setInputValue] = useState(todo.title);
 
 	const updateTodo = () => {
 		inputRef.current.focus();
@@ -13,9 +14,9 @@ const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
 	};
 
 	const saveUpdatedTodo = () => {
-		onUpdateTodo(todo.id, inputRef.current.firstChild.value);
+		onUpdateTodo(todo.id, inputValue);
 		setReadOnly(true);
-		if (!inputRef.current.firstChild.value) {
+		if (!inputValue) {
 			onDelTodo(todo.id);
 		}
 	};
@@ -30,6 +31,7 @@ const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
 				disableUnderline={readOnly}
 				onDoubleClick={updateTodo}
 				onBlur={saveUpdatedTodo}
+				onChange={(event) => setInputValue(event.target.value)}
 			/>
 			<IconButton
 				aria-label="delete"

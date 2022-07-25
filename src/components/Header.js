@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from '@mui/system';
 import React from 'react';
 
 const Header = ({ title }) => {
@@ -9,7 +9,7 @@ const Header = ({ title }) => {
 	);
 };
 
-const HeaderWrapper = styled.header`
+const HeaderWrapper = styled('header')`
 	background-color: #333;
 	color: #fff;
 	text-align: center;
