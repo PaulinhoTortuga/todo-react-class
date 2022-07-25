@@ -32,17 +32,6 @@ const TodoPage = () => {
 		setFilterStatus(newStatus);
 	};
 
-	// const todoCheck = (id) => {
-	// 	setTodoListState(() => {
-	// 		return todoListState.map((todo) => {
-	// 			if (todo.id === id) {
-	// 				return { ...todo, checked: !todo.checked };
-	// 			} else {
-	// 				return todo;
-	// 			}
-	// 		});
-	// 	});
-	// };
 	const todoCheck = (id) => {
 		setTodoListState(
 			todoListState.map((todo) => {
@@ -68,10 +57,6 @@ const TodoPage = () => {
 			checked: false
 		};
 		setTodoListState((state) => [...state, newTodo]);
-		console.log(newTodo);
-		// setTodoListState(() => {
-		// 	return [...todoListState, newTodo];
-		// });
 	};
 
 	const toggleAll = () => {
@@ -90,12 +75,6 @@ const TodoPage = () => {
 			}
 		});
 	};
-	// const toggleAll = () => {
-	// 	setTodoListState((state) => {
-	// 		let uncheckedTodos = state.filter((item) => item.checked === false);
-	// 		return state.map((item) => [...item, (item.checked = uncheckedTodos.length !== 0)]);
-	// 	});
-	// };
 
 	const clearChecked = () => {
 		setTodoListState((state) => state.filter((item) => !item.checked));
