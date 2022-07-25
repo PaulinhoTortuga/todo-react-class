@@ -1,18 +1,19 @@
+import styled from 'styled-components';
 import React from 'react';
 
 const Header = ({ title }) => {
 	return (
-		<header style={headerStyle}>
+		<HeaderWrapper>
 			<h1>{title}</h1>
-		</header>
+		</HeaderWrapper>
 	);
 };
 
-const headerStyle = {
-	backgroundColor: '#333',
-	color: '#fff',
-	textAlign: 'center',
-	padding: '10px'
-};
+const HeaderWrapper = styled.header`
+	background-color: #333;
+	color: #fff;
+	text-align: center;
+	padding: 10px;
+`;
 
 export default Header;

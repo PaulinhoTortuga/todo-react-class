@@ -4,16 +4,18 @@ import InputField from '../components/InputField';
 const AddTodo = ({ addTodo }) => {
 	const [inputValue, setInputValue] = useState('');
 
-	const onInputChange = (event) => {
+	const handleInputChange = (event) => {
 		setInputValue(event.target.value);
 	};
 
-	const onInputKeyUp = (event) => {
+	const handleInputKeyUp = (event) => {
+		console.log('inputValue1', inputValue);
 		if (event.key === 'Enter') {
+			console.log('inputValue2', inputValue);
 			addTodo(inputValue);
 			setInputValue('');
 		}
 	};
-	return <InputField value={inputValue} onChange={onInputChange} onKeyUp={onInputKeyUp} />;
+	return <InputField value={inputValue} onChange={handleInputChange} onKeyUp={handleInputKeyUp} />;
 };
 export default AddTodo;

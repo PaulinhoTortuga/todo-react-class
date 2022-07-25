@@ -1,14 +1,14 @@
-import styled from 'styled-components';
+import { styled } from '@mui/system';
 import { Button, ButtonGroup } from '@mui/material';
 
 export default function TodoFooter({
 	todoListLength,
-	filterStatusHandler,
+	onFilterChange,
 	toggleAllHandler,
 	clearCheckedHandler
 }) {
 	const filterHandler = (event) => {
-		filterStatusHandler(event.target.id);
+		onFilterChange(event.target.id);
 	};
 	return (
 		<Footer>
@@ -28,7 +28,7 @@ export default function TodoFooter({
 	);
 }
 
-const Footer = styled.div`
+const Footer = styled('div')`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -38,7 +38,7 @@ const Footer = styled.div`
 	border-radius: 4px;
 `;
 
-const Span = styled.span`
+const Span = styled('span')`
 	vertical-align: center;
 	margin: auto 0;
 	background-color: #fff;

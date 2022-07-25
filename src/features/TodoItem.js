@@ -1,42 +1,36 @@
-import styled from 'styled-components';
+import { styled } from '@mui/system';
 import { Checkbox, Input, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useState } from 'react';
-
-// const textStyle = (checked) => {
-// 	return {
-// 		textDecoration: checked ? 'line-through' : 'none',
-// 		marginLeft: '20px'
-// 	};
-// };
+import { useState, useRef } from 'react';
 
 const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
 	const [readOnly, setReadOnly] = useState(true);
+	const inputRef = useRef();
 
-	const updateTodo = (event) => {
-		const input = event.target;
-		input.focus();
-		console.log(input);
-		setReadOnly(() => false);
-		input.onblur = () => {
-			onUpdateTodo(todo.id, input.value);
-			setReadOnly(() => true);
-			if (!input.value) {
-				onDelTodo(todo.id);
-			}
-		};
+	const updateTodo = () => {
+		inputRef.current.focus();
+		setReadOnly(false);
+	};
+
+	const saveUpdatedTodo = () => {
+		onUpdateTodo(todo.id, inputRef.current.firstChild.value);
+		setReadOnly(true);
+		if (!inputRef.current.firstChild.value) {
+			onDelTodo(todo.id);
+		}
 	};
 	return (
 		<Item>
 			<Checkbox checked={todo.checked} onChange={() => onCheckTodo(todo.id)} />
 			<Input
+				ref={inputRef}
 				defaultValue={todo.title}
 				variant="standard"
 				readOnly={readOnly}
 				disableUnderline={readOnly}
 				onDoubleClick={updateTodo}
+				onBlur={saveUpdatedTodo}
 			/>
-			{/* <p style={textStyle(todo.checked)}>{todo.title}</p> */}
 			<IconButton
 				aria-label="delete"
 				sx={{ marginLeft: 'auto' }}
@@ -48,7 +42,7 @@ const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
 };
 export default TodoItem;
 
-const Item = styled.div`
+const Item = styled('div')`
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
