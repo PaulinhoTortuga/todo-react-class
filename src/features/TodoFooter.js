@@ -1,27 +1,28 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleAll, clearChecked } from '../store/features/todoListSlice';
+
 import { styled } from '@mui/system';
 import { Button, ButtonGroup } from '@mui/material';
 
-export default function TodoFooter({
-	todoListLength,
-	onFilterChange,
-	toggleAllHandler,
-	clearCheckedHandler
-}) {
+export default function TodoFooter({ onFilterChange }) {
+	const dispatch = useDispatch();
+	const todos = useSelector((state) => state.todoList.todos);
+
 	const filterHandler = (event) => {
 		onFilterChange(event.target.id);
 	};
 	return (
 		<Footer>
-			<Span>{todoListLength} items left</Span>
+			<Span>{todos.length} items left</Span>
 			<ButtonGroup variant="contained" onClick={filterHandler}>
 				<Button id="all">All</Button>
 				<Button id="active">Active</Button>
 				<Button id="completed">Completed</Button>
 			</ButtonGroup>
-			<Button variant="contained" onClick={toggleAllHandler}>
+			<Button variant="contained" onClick={() => dispatch(toggleAll())}>
 				Finish all
 			</Button>
-			<Button variant="contained" onClick={clearCheckedHandler}>
+			<Button variant="contained" onClick={() => dispatch(clearChecked())}>
 				Clear completed
 			</Button>
 		</Footer>
