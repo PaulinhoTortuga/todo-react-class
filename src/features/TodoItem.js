@@ -1,42 +1,55 @@
+import { useDispatch } from 'react-redux';
+import { todoCheck, delTodo, updateTodo } from '../store/features/todoListSlice';
+
+import { useState, useRef, useEffect } from 'react';
+
 import { styled } from '@mui/system';
 import { Checkbox, Input, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useState, useRef } from 'react';
 
-const TodoItem = ({ todo, onCheckTodo, onDelTodo, onUpdateTodo }) => {
+// import { setTodos } from '../store/features/todoListSlice';
+
+const TodoItem = ({ todo }) => {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch({ type: 'todoList/setTodos' });
+	}, []);
+
 	const inputRef = useRef();
 	const [readOnly, setReadOnly] = useState(true);
 	const [inputValue, setInputValue] = useState(todo.title);
 
-	const updateTodo = () => {
+	const updateTodoItem = () => {
 		inputRef.current.focus();
 		setReadOnly(false);
 	};
 
-	const saveUpdatedTodo = () => {
-		onUpdateTodo(todo.id, inputValue);
+	const saveUpdatedTodoItem = () => {
+		const id = todo.id;
+		dispatch(updateTodo({ id, inputValue }));
 		setReadOnly(true);
 		if (!inputValue) {
-			onDelTodo(todo.id);
+			dispatch(delTodo(todo.id));
 		}
 	};
 	return (
 		<Item>
-			<Checkbox checked={todo.checked} onChange={() => onCheckTodo(todo.id)} />
+			<Checkbox checked={todo.checked} onChange={() => dispatch(todoCheck(todo.id))} />
 			<Input
 				ref={inputRef}
 				defaultValue={todo.title}
 				variant="standard"
 				readOnly={readOnly}
 				disableUnderline={readOnly}
-				onDoubleClick={updateTodo}
-				onBlur={saveUpdatedTodo}
+				onDoubleClick={updateTodoItem}
+				onBlur={saveUpdatedTodoItem}
 				onChange={(event) => setInputValue(event.target.value)}
 			/>
 			<IconButton
 				aria-label="delete"
 				sx={{ marginLeft: 'auto' }}
-				onClick={() => onDelTodo(todo.id)}>
+				onClick={() => dispatch(delTodo(todo.id))}>
 				<DeleteIcon />
 			</IconButton>
 		</Item>

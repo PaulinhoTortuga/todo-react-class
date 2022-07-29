@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../store/features/todoListSlice';
+
 import InputField from '../components/InputField';
 
-const AddTodo = ({ addTodo }) => {
+const AddTodo = () => {
+	const dispatch = useDispatch();
 	const [inputValue, setInputValue] = useState('');
 
 	const handleInputChange = (value) => {
@@ -10,7 +15,7 @@ const AddTodo = ({ addTodo }) => {
 
 	const handleInputKeyUp = (event) => {
 		if (event.key === 'Enter') {
-			addTodo(inputValue);
+			dispatch(addTodo(inputValue));
 			setInputValue('');
 		}
 	};
